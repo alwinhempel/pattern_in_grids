@@ -1,17 +1,20 @@
-let measureLength = 1600;
-let pulse = 4;
+let measureLength = 1900;
+let pulse = 16;
 
 let verticalgap = 100;
-let margin = 50;
+let margin = 100;
 
 let value = 8;
-let modifier = 1.5;
+let modifier = 0.6667;
 let noteLength = measureLength / value * modifier;
 let patternLength = 6;
+
 
 let circX = margin;
 let circY = margin;
 let circleradius;
+
+
 
 function setup() {
   createCanvas(2100, 2970);
@@ -29,7 +32,7 @@ function setup() {
     line(k, margin, k, 2970 + margin);
   }
 
-  for (let i = 0; i < 64; i++){
+  for (let i = 0; i < 128; i++){
 
     if(i % patternLength == 0){
       circleradius = 60;
@@ -37,17 +40,28 @@ function setup() {
       circleradius = 30;
     };
 
-  
     if (circX >= measureLength + margin){ 
       circX -= measureLength;
       circY += verticalgap;
+
+
+      if(round(circX) == margin && i % patternLength == 0){
+        break;
+      } else {
       circle(circX, circY, circleradius);
       circX += noteLength;
+      }
+
     } else {
     circle(circX, circY, circleradius);
     circX += noteLength;
     };
   
+    if(i % patternLength == 0 && circX == margin){
+      break;
+    }
+
+
   }
   
 
