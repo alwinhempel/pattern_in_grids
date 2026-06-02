@@ -1,19 +1,30 @@
-let measureLength = 1900;
-let pulse = 16;
+// Notenlänge
+let value = 8;
 
+//Normal = 1  /  Punktiert = 1.5  /  Triole = 0.6667
+let modifier = 1.5;
+
+//Jeder wievielte Punkt ist groß?
+let patternLength = 6;
+
+//vertikale Linien zum orientieren
+let pulse = 4;
+
+
+
+
+
+
+
+let measureLength = 1900;
 let verticalgap = 100;
 let margin = 100;
 
-let value = 8;
-let modifier = 0.6667;
 let noteLength = measureLength / value * modifier;
-let patternLength = 6;
-
 
 let circX = margin;
 let circY = margin;
 let circleradius;
-
 
 
 function setup() {
@@ -21,99 +32,56 @@ function setup() {
   background(255);
   stroke("magenta");
   strokeWeight(2);
+  fill("magenta");
 
-  //vertical grid
-  for (let j = margin; j < 2970; j += verticalgap) {
-    line(margin, j, measureLength + margin, j);
-  }
-  
-  //horizontal grid
-  for (let k = margin; k <= measureLength + margin; k += measureLength/pulse){
-    line(k, margin, k, 2970 + margin);
-  }
+  line(margin, circY, measureLength + margin, circY);
 
-  for (let i = 0; i < 128; i++){
 
+  for (let i = 0; i < 256; i++){
+
+
+    // Pattern durch Größe
     if(i % patternLength == 0){
       circleradius = 60;
     } else {
       circleradius = 30;
     };
 
+
+
+
     if (circX >= measureLength + margin){ 
+
       circX -= measureLength;
       circY += verticalgap;
 
-
       if(round(circX) == margin && i % patternLength == 0){
+
+        for (let k = margin; k <= measureLength + margin; k += measureLength/pulse){
+          strokeWeight(1);
+          line(k, margin, k, circY - verticalgap);
+        };
+
         break;
+
+
       } else {
+
+        line(margin, circY, measureLength + margin, circY);
+        circle(circX, circY, circleradius);
+        circX += noteLength;
+
+      }
+    } else {
+
       circle(circX, circY, circleradius);
       circX += noteLength;
-      }
-
-    } else {
-    circle(circX, circY, circleradius);
-    circX += noteLength;
+    
     };
-  
-    if(i % patternLength == 0 && circX == margin){
-      break;
-    }
 
 
   }
   
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  // //draw points
-  // for (let i = 0; i < 256; i++) {
-  // if (rowPoint < steps) {
-  //       if (i % patternLength == 0) {
-  //         circle(margin + rowPoint * measureLength/steps, y, 50);
-  //         rowPoint++;
-  //       } else {
-  //         circle(margin + rowPoint * measureLength/steps, y, 25);
-  //         rowPoint++;
-  //       }
-  //     } else {
-  //       y += verticalgap;
-  //       rowPoint = 0;
-  //       if (i % patternLength == 0) {
-  //         break;
-  //       } else {
-  //         circle(margin + rowPoint * measureLength/steps, y, 25);
-  //         rowPoint++;
-  //       }
-  //     }
-  //   }
 }
