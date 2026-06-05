@@ -7,3 +7,13 @@ canvas {
   width: 100vw;
   height: 100vh;
 }
+
+
+input {
+  accent-color: magenta;
+}
+
+label {
+  font-family: monospace;
+
+}
