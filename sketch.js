@@ -1,21 +1,67 @@
-// Notenlänge
-let value = 16;
+let modifierSelect;
+let valueSelect;
+let patternLengthSelect;
+let pulseSelect;
 
-//Normal = 1  /  Punktiert = 1.5  /  Triole = 0.6667
-let modifier = 1.5;
+// // Notenlänge
+// let value = 16;
 
-//Jeder wievielte Punkt ist groß?
-let patternLength = 6;
+// //Normal = 1  /  Punktiert = 1.5  /  Triole = 0.6667
 
-//vertikale Linien zum orientieren
-let pulse = 4 ;
+// //Jeder wievielte Punkt ist groß?
+// let patternLength = 6;
+
+// //vertikale Linien zum orientieren
+// let pulse = 4 ;
 
 
 
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight*0.9);
+
+  //modifier
+  modifierSelect = createRadio();
+  modifierSelect.option(1, 'normal');
+  modifierSelect.option(1.5, 'punktiert');
+  modifierSelect.option(0.6667, 'triole');
+  modifierSelect.selected('1.5');
+  modifierSelect.changed(drawGrid);
+
+  //value
+  valueSelect = createRadio();
+  valueSelect.option(2, '1/2');
+  valueSelect.option(4, '1/4');
+  valueSelect.option(8, '1/8');
+  valueSelect.option(16, '1/16');
+  valueSelect.selected('16')
+  valueSelect.changed(drawGrid);
+
+  //pattenLength
+  patternLengthSelect = createRadio();
+  patternLengthSelect.option(1, '1');
+  patternLengthSelect.option(2, '2');
+  patternLengthSelect.option(3, '3');
+  patternLengthSelect.option(4, '4');
+  patternLengthSelect.option(5, '5');
+  patternLengthSelect.option(6, '6');
+  patternLengthSelect.option(7, '7');
+  patternLengthSelect.option(8, '8');
+  patternLengthSelect.selected('6');
+  patternLengthSelect.changed(drawGrid);
+
+  //Pulse
+  pulseSelect = createRadio();
+  pulseSelect.option(2, '1/2');
+  pulseSelect.option(4, '1/4');
+  pulseSelect.option(8, '1/8');
+  pulseSelect.option(16, '1/16');
+  pulseSelect.selected('16')
+  pulseSelect.changed(drawGrid);
+
+
   drawGrid();
+
 }
 
 function windowResized(){
@@ -23,12 +69,21 @@ function windowResized(){
   drawGrid();
 }
 
+
+
 function drawGrid(){
 
   background(255);
   stroke("magenta");
   strokeWeight(2);
   fill("magenta");
+
+
+  let modifier = Number(modifierSelect.value());
+  let value = Number(valueSelect.value());
+  let patternLength = Number(patternLengthSelect.value());
+  let pulse = Number(pulseSelect.value());
+
 
   let measureLength = round(windowWidth * 0.8);
   let verticalgap = windowHeight * 0.075;
