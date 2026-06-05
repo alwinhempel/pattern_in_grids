@@ -1,5 +1,5 @@
 // Notenlänge
-let value = 8;
+let value = 16;
 
 //Normal = 1  /  Punktiert = 1.5  /  Triole = 0.6667
 let modifier = 1.5;
@@ -8,37 +8,41 @@ let modifier = 1.5;
 let patternLength = 6;
 
 //vertikale Linien zum orientieren
-let pulse = 4;
+let pulse = 4 ;
 
 
-
-
-
-
-
-let measureLength = 1900;
-let verticalgap = 100;
-let margin = 100;
-
-let noteLength = measureLength / value * modifier;
-
-let circX = margin;
-let circY = margin;
-let circleradius;
 
 
 function setup() {
-  createCanvas(2100, 2970);
+  createCanvas(windowWidth, windowHeight);
+  drawGrid();
+}
+
+function windowResized(){
+  resizeCanvas(windowWidth, windowHeight);
+  drawGrid();
+}
+
+function drawGrid(){
+
   background(255);
   stroke("magenta");
   strokeWeight(2);
   fill("magenta");
 
+  let measureLength = round(windowWidth * 0.8);
+  let verticalgap = windowHeight * 0.075;
+  let margin = windowWidth * 0.1;
+  let noteLength = measureLength / value * modifier;
+  let circX = margin;
+  let circY = margin;
+  let circleradius;
+
   line(margin, circY, measureLength + margin, circY);
 
 
-  for (let i = 0; i < 256; i++){
 
+  for (let i = 0; i < 256; i++){
 
     // Pattern durch Größe
     if(i % patternLength == 0){
@@ -55,10 +59,11 @@ function setup() {
       circX -= measureLength;
       circY += verticalgap;
 
-      if(round(circX) == margin && i % patternLength == 0){
+      if(round(circX) == round(margin) && i % patternLength == 0){
 
-        for (let k = margin; k <= measureLength + margin; k += measureLength/pulse){
+        for (let k = margin; k < measureLength + margin; k += measureLength/pulse){
           strokeWeight(1);
+          stroke("magenta");
           line(k, margin, k, circY - verticalgap);
         };
 
